@@ -30,6 +30,7 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.navigation.NavController
+import androidx.navigation.compose.rememberNavController
 
 
 @Composable
@@ -99,7 +100,10 @@ fun LoginScreen(navController: NavController) {
             Spacer(modifier = Modifier.height(24.dp))
 
             Button(
-                onClick = {}, modifier = Modifier
+                onClick = {
+                    navController.navigate("home")
+
+                }, modifier = Modifier
                     .fillMaxWidth()
                     .height(50.dp),
                 shape = RoundedCornerShape(12.dp),
@@ -125,5 +129,6 @@ fun LoginScreen(navController: NavController) {
 @Preview
 @Composable
 fun LoginScreenPreview() {
-    //LoginScreen()
+    val previewNavController = rememberNavController()
+    LoginScreen(navController = previewNavController)
 }

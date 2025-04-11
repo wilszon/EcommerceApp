@@ -13,6 +13,7 @@ import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.ArrowBack
 import androidx.compose.material.icons.filled.Email
+import androidx.compose.material.icons.filled.Face
 import androidx.compose.material.icons.filled.Lock
 import androidx.compose.material.icons.filled.Person
 import androidx.compose.material3.Button
@@ -33,18 +34,20 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import androidx.navigation.NavController
+import androidx.navigation.compose.rememberNavController
 
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
-fun RegisterScreen() {
+fun RegisterScreen(navController: NavController) {
     Scaffold(
         topBar = {
             TopAppBar(
                 title = {},
                 navigationIcon = {
                     IconButton(onClick = {
-
+                        navController.popBackStack()
                     }) {
                         Icon(Icons.Default.ArrowBack, contentDescription = null)
                     }
@@ -108,8 +111,8 @@ fun RegisterScreen() {
                 modifier = Modifier.fillMaxWidth(),
                 leadingIcon = {
                     Icon(
-                        imageVector = Icons.Default.Lock,
-                        contentDescription = "Email",
+                        imageVector = Icons.Default.Face,
+                        contentDescription = "Nombre Usuario",
                         tint = Color(0xFFFF9900)
                     )
                 },
@@ -127,8 +130,8 @@ fun RegisterScreen() {
                 modifier = Modifier.fillMaxWidth(),
                 leadingIcon = {
                     Icon(
-                        imageVector = Icons.Default.Email,
-                        contentDescription = "Email",
+                        imageVector = Icons.Default.Lock,
+                        contentDescription = "Contraseña",
                         tint = Color(0xFFFF9900)
                     )
                 },
@@ -177,5 +180,6 @@ fun RegisterScreen() {
 @Preview
 @Composable
 fun RegisterScreenPreview() {
-    RegisterScreen()
+    val previewNavController = rememberNavController()
+    RegisterScreen(navController = previewNavController)
 }
