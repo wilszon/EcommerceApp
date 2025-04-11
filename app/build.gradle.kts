@@ -56,5 +56,11 @@ dependencies {
     androidTestImplementation(libs.androidx.ui.test.junit4)
     debugImplementation(libs.androidx.ui.tooling)
     debugImplementation(libs.androidx.ui.test.manifest)
+
+    //Libreria de Navegacion
     implementation(libs.androidx.navigation.compose)
+
+    //Liberia para cargar imagenes de internet
+    implementation(libs.coil.compose)
+    implementation(libs.coil.network.okhttp)
 }
