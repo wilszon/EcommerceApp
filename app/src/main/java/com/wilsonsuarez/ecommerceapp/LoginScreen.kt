@@ -1,5 +1,8 @@
 package com.wilsonsuarez.ecommerceapp
 
+import android.app.Activity
+import android.widget.Toast
+import androidx.annotation.OptIn
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
@@ -21,20 +24,36 @@ import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Text
 import androidx.compose.material3.TextButton
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
+import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.platform.LocalView
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import androidx.media3.common.util.Log
+import androidx.media3.common.util.UnstableApi
 import androidx.navigation.NavController
 import androidx.navigation.compose.rememberNavController
+import com.google.firebase.Firebase
+import com.google.firebase.auth.auth
 
 
+@OptIn(UnstableApi::class)
 @Composable
 fun LoginScreen(navController: NavController) {
+
+    //ESTADOS
+    var inputEmail by remember { mutableStateOf("") }
+    var inputPassword by remember { mutableStateOf("") }
+    val activity = LocalView.current.context as Activity
+
     Scaffold { innerPadding ->
         Column(
             modifier = Modifier
@@ -62,7 +81,7 @@ fun LoginScreen(navController: NavController) {
             Spacer(modifier = Modifier.height(24.dp))
 
             OutlinedTextField(
-                value = "",
+                value = inputEmail,
                 onValueChange = {},
                 modifier = Modifier.fillMaxWidth(),
                 leadingIcon = {
@@ -81,7 +100,7 @@ fun LoginScreen(navController: NavController) {
             Spacer(modifier = Modifier.height(24.dp))
 
             OutlinedTextField(
-                value = "",
+                value = inputPassword,
                 onValueChange = {},
                 modifier = Modifier.fillMaxWidth(),
                 leadingIcon = {
@@ -101,7 +120,19 @@ fun LoginScreen(navController: NavController) {
 
             Button(
                 onClick = {
-                    navController.navigate("home")
+
+
+                    val auth = Firebase.auth
+
+                    auth.signInWithEmailAndPassword(inputEmail, inputPassword)
+                        .addOnCompleteListener(activity) { task ->
+
+                            if (task.isSuccessful) {
+                                navController.navigate("home")
+                            } else {
+                                Log.i("login", "Hubo un error")
+                            }
+                        }
 
                 }, modifier = Modifier
                     .fillMaxWidth()
@@ -119,16 +150,19 @@ fun LoginScreen(navController: NavController) {
             TextButton(onClick = {
                 navController.navigate("register")
             }) {
-                Text(text = "¿No tienes una cuenta? Registrate",
-                    color = Color(0xFFFF9900))
+                Text(
+                    text = "¿No tienes una cuenta? Registrate",
+                    color = Color(0xFFFF9900)
+                )
             }
         }
     }
 }
 
-@Preview
-@Composable
-fun LoginScreenPreview() {
-    val previewNavController = rememberNavController()
-    LoginScreen(navController = previewNavController)
+fun validateEmail(email: String): Pair<Boolean, String> {
+    return when {
+        email.isEmpty() -> Pair(false, "El correo es obligatorio")
+        !email.endsWith("unab@.edu.co") -> Pair(false, "El correo debe ser UNAB.")
+        else -> Pair(true, "")
+    }
 }
