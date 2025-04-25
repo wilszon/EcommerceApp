@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "347350780389",
+    "project_id": "ecommerceapp-cfaf3",
+    "storage_bucket": "ecommerceapp-cfaf3.firebasestorage.app"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:347350780389:android:71a23fa906e728a613870c",
+        "android_client_info": {
+          "package_name": "com.wilsonsuarez.ecommerceapp"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAYdaP18eyfEaUK9Kczdd7om1to94O5htc"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

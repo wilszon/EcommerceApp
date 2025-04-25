@@ -22,7 +22,6 @@ class MainActivity : ComponentActivity() {
         enableEdgeToEdge()
         setContent {
             EcommerceAppTheme {
-
                 val myNavController = rememberNavController()
                 val myStartDestination: String = "login"
                 NavHost(
